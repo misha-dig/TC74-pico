@@ -3,9 +3,9 @@ The TC74 series I2C simple tiny temperature sensor for support Raspberry Pi Pico
 
 Advantage of TC74 sensor is low cost (less than two dollars per each sensor), simple usage (very little I2C commands and don't require to additional data processing and just took integer value), low current comsuption (maximum: 10 uA for standby mode and 350 uA for normal mode), wide voltage range (2.7 - 5.5 volts).
 
-One disadvange of this sensor is not very accuracy temperature measurement (2-3 oC plus voltage dependent 1 oC per volt) and big resolution measurement (1 oC), according offcial datasheet. 
+One disadvange of this sensor is not very accuracy temperature measurement (2-3 oC plus voltage dependent 1 oC per volt) and big resolution measurement (1 oC), according official datasheet. 
 
-Note: When use TC74 model sensor use outside voltage recommendation will temperature additional offset dependent what voltage diffrence. (For example TC74A45.0VAT - optimise for 5 volts application), please look an offcial datasheet of TC74.
+Note: When use TC74 model sensor use outside voltage recommendation will temperature additional offset dependent what voltage diffrence. (For example TC74A45.0VAT - optimise for 5 volts application), please look an official datasheet of TC74.
 
 The code is based: TC74-arduino-lib (You can look and compare in github repository).
 
