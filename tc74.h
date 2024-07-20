@@ -6,7 +6,7 @@
 /**
  * @file tc74.h
  * @author Misha Zaslavskis
- * @date 7th July 2023
+ * @date 19th July 2024
  * @brief A header file of TC74 sensor measuring temperature functionality 
  * @see See in tc74.c code
  * 
@@ -82,6 +82,7 @@
 #define RWCR 0x01
 
 #include "pico/stdlib.h" /* A standard header file for usage RPI PICO board */
+#include <stdlib.h>
 #include <stdint.h> /* For using integer values with diffirent bit size */
 #include "hardware/i2c.h"/* Header file from RPI Pico SDK C/C++ for usage I2C interface */
 
@@ -125,5 +126,15 @@ int8_t set_standby_mode_tc74(uint8_t sensor_address, uint8_t enable_standby);
  * @return @c uint8_t A 8-bit register value of TC74 sensor state value. You can look a official TC74 datasheet about sensor status in section "4.0 REGISTER SET AND PROGRAMMER’S MODEL" page
 */
 uint8_t get_rwcr_state_of_tc74(uint8_t sensor_address);
+
+/**
+ * @brief A function that check TC74 sensor in selected I2C bus address is present in your code. 
+ * Depsite that I used some parts of source code in pico-example/i2c/bus_scan/bus_scan.c, may be use for any I2C device due works like I2C scanner by changing not TC74 sensor.
+ * NB: never connect sensor with same exact model/address which may be create confict or non-workable your circuit and code.
+ * For example, two TC74A4 in the same I2C bus - never to do! Instead this stupid mistake, use TC74A4 and TC74A0 sensor in the same bus which will works without any consequences.
+ * @param sensor_address An I2C address of TC74 series sensor, dependent which model of TC74 sensor. Please look a datasheet of TC74.
+ * @return @c bool Statement of return value of two-state. True (or '1' state) state is mean present sensor in I2C address. False (or '0' state) is absence or broken TC74 sensor in selected I2C bus address.  
+*/
+uint8_t is_present_address_tc74(uint8_t sensor_address);
 
 #endif // __TC74_H_

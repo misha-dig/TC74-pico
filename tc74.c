@@ -6,7 +6,7 @@
 /**
  * @file tc74.c
  * @author Misha Zaslavskis
- * @date 7 July 2023
+ * @date 19th July 2024
  * @brief A source of code that support tc74 temperature sensor in I2C/SMBus inferface for Raspberry Pi Pico / RP2040 MCU
  * TC74 series sensors are tiny simple sensor that able measure temperature anymore for electronics application. (Total three I2C commands in this slave hardware)
  * You can see a datasheet of sensor. @see https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/21462D.pdf
@@ -78,7 +78,14 @@ uint8_t get_rwcr_state_of_tc74(uint8_t sensor_address)
     if (i2c_write_blocking(i2c0, sensor_address, read_config_address_ackw, 1, false) == PICO_ERROR_GENERIC) return error_value;  /* Send I2C command request to sensor address to read sensor configuration data */
     if (i2c_read_blocking(i2c0, sensor_address, rwcr_status, 1, true) == PICO_ERROR_GENERIC) return error_value; /* Receive current sensor configuration data */
 
-    sleep_us(5); /* I2C Bus delay to avoid I2C transfer error for sensor for next start I2C transfer (Mimimum value is 4.7 microseconds) */
+    sleep_us(5); /* I2C Bus delay to avoid I2C transfer error for sensor for next start I2C transfer (Minimum value is 4.7 microseconds) */
     
     return rwcr_status[0]; /* Return sensor status value after obtaining this data */
+}
+
+uint8_t is_present_address_tc74(uint8_t sensor_address)
+{
+    int ret = i2c_read_blocking(i2c0, sensor_address, NULL, 1, false);  /* Read data from I2C interface with connected TC74 sensor. Determine size bytes of data during I2C reading mode */ 
+
+    return ret < 0 ? false : true; /* Return variable of state of present I2C address of TC74 sensor */
 }
